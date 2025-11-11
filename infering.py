@@ -3,7 +3,11 @@ import numpy as np
 import joblib
 import sys
 import json
+import warnings
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+
+warnings.filterwarnings("ignore", category=UserWarning)
+warnings.filterwarnings("ignore", category=DeprecationWarning)
 
 def main():
     if len(sys.argv) != 3:
@@ -25,9 +29,7 @@ def main():
         portscan_count = int(df['Label'].str.contains('portscan', case=False, na=False).sum())
         normal_count = len(df) - ddos_count - portscan_count
         
-        y_true = df['Label'].apply(
-            lambda x: 1 if 'ddos' in str(x).lower() or 'portscan' in str(x).lower() else 0
-        )
+        y_true = df['Label'].apply(lambda x: 1 if 'ddos' in str(x).lower() or 'portscan' in str(x).lower() else 0)
         
         X = df.drop('Label', axis=1).select_dtypes(include='number')
         
