@@ -22,8 +22,37 @@ https://www.kaggle.com/datasets/signalspikes/internet-port-scan-1
 4. Выполнить chmod +x setup.sh
 5. Выполнить ./setup.sh (Установка необходимых зависимостей и библиотек)
 6. Выполнить source ml_env/bin/activate (активирование окружающей среды python)
-7. python3 train.py (Обучение модели)
+7. python3 train.py (Обучение модели, можно 6 и 7 шаг пропустить т.к файл с обученной моделью есть в репозитории, для наглядности можно самим сгенерировать)
 8. g++ -o detect detect.cpp (Компиляция исполняемого файла)
 9. ./detect path_to_dataset (вместо path_to_dataset нужно вставить путь к файлу для анализа, пример ./detect datasets/balanced_50_50_small.csv)
 Также сделал тестовый файл mixed_30_30_40_test.csv для проверки работоспособности модели.
+
+## Результаты
+Получена обученная модель, готовая к анализу данных на наличие атак DDoS и PortScan.
+Получившиеся метрики на обучающих датасетах:
+DDoS: 800 (57.1%)
+PortScan: 400 (28.6%)
+Normal: 200 (14.3%)
+Samples: 1400
+Attacks: 1200, Normal: 200
+Accuracy:  1.000
+Precision: 1.000
+Recall:    1.000
+F1-Score:  1.000
+Получившиеся метрики на тестовом датасете mixed_30_30_40_test.csv:
+Metrics:
+  Accuracy:  0.998
+  Precision: 0.998
+  Recall:    1.0
+  F1-Score:  0.999
+
+Statistics:
+  Total records: 650
+  Actual attacks: 450
+  Predicted attacks: 451
+
+Attack Type Breakdown:
+  DDoS attacks:    300
+  PortScan attacks: 150
+  Normal traffic:   200
 
