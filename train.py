@@ -48,7 +48,7 @@ def main():
         print(f"   Error loading normal: {e}")
 
     if not all_data:
-        print("ERROR: No data loaded!")
+        print("No data loaded!")
         return
         
     train_df = pd.concat(all_data, ignore_index=True)
@@ -66,9 +66,7 @@ def main():
     df_clean = train_df.drop([col for col in cols_to_drop if col in train_df.columns], axis=1, errors='ignore')
     df_clean = df_clean.fillna(0)
     
-    df_clean['is_attack'] = df_clean['Label'].apply(
-        lambda x: 1 if any(attack in str(x).lower() for attack in ['ddos', 'portscan']) else 0
-    )
+    df_clean['is_attack'] = df_clean['Label'].apply(lambda x: 1 if any(attack in str(x).lower() for attack in ['ddos','portscan']) else 0)
     
     X = df_clean.drop(['Label', 'is_attack'], axis=1, errors='ignore')
     X = X.select_dtypes(include=[np.number])
@@ -79,12 +77,7 @@ def main():
 
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
     
-    model = RandomForestClassifier(
-        n_estimators=100,
-        max_depth=20,
-        random_state=42,
-        class_weight='balanced'
-    )
+    model = RandomForestClassifier(n_estimators=100,max_depth=20,random_state=42,class_weight='balanced')
     model.fit(X_train, y_train)
     
     y_pred = model.predict(X_test)
